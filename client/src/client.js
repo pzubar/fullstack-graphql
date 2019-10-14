@@ -1,30 +1,17 @@
 import { ApolloClient } from 'apollo-client'
 import { InMemoryCache } from 'apollo-cache-inmemory'
 import { HttpLink } from 'apollo-link-http'
-import gql from 'graphql-tag'
 
-const typeDefs = gql`
-  extend type Pet {
-    vacinated: Boolean!
-  }
-`;
-
-const resolvers = {
-  Pet: {
-    vacinated: () => true
-  }
-};
-
+/**
+ * Create a new apollo client and export as default
+ */
+const link = new HttpLink({ uri: 'http://localhost:4000/' })
 const cache = new InMemoryCache()
-const link = new HttpLink({
-  uri: 'http://localhost:4000/'
-})
 
 const client = new ApolloClient({
-  cache,
   link,
-  typeDefs,
-  resolvers
+  cache,
+  connectToDevTools: true,
 })
 
 export default client
