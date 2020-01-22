@@ -7,10 +7,12 @@ const db = low(adapter)
 const createPetModel = require('./pet')
 const createUserModel = require('./user')
 
+const models = {
+  Pet: createPetModel(db),
+  User: createUserModel(db),
+}
+
 module.exports = {
-  models: {
-    Pet: createPetModel(db),
-    User: createUserModel(db),
-  },
+  models,
   db
 }

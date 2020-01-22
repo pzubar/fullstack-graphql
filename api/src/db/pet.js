@@ -1,5 +1,14 @@
 const nanoid = require('nanoid')
 
+/**
+ * @typedef {{createdAt:number, id:string}|{findMany(*=):*, findOne(*=):*, create(*):{createdAt:number, id:string}}|*} PetModel
+ */
+
+/**
+ *
+ * @param db
+ * @returns PetModel
+ */
 const createPetModel = db => {
   return {
     findMany(filter) {
