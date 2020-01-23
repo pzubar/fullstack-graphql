@@ -12,8 +12,11 @@ module.exports = {
 	 * @param __
 	 * @param {{Pet: PetModel}} models
 	 */
-	pets(_, __, { models }) {
-	  return models.Pet.findMany({})
+	pets(_, {input}, { models }) {
+	  return models.Pet.findMany(input)
+	},
+	pet(_, {input}, { models }) {
+	  return models.Pet.findOne(input)
 	},
 	me() {
 	  return {
@@ -27,11 +30,11 @@ module.exports = {
   //
   // },
   Pet: {
-	// img(pet) {
-	//   return pet.type === 'DOG'
-	// 	  ? 'https://placedog.net/300/300'
-	// 	  : 'http://placekitten.com/300/300'
-	// },
+	img(pet) {
+	  return pet.type === 'DOG'
+		  ? 'https://placedog.net/300/300'
+		  : 'http://placekitten.com/300/300'
+	},
   },
   User: {},
 }

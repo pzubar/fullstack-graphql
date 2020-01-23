@@ -13,10 +13,18 @@ const typeDefs = gql`
         createdAt: String!,
         name: String,
         type: String
+        img: String
     }
+
+    input PetInput {
+        name: String
+        type: String
+    }
+
     type Query {
         me: User!
-        pets: [Pet]!
+        pets(input: PetInput): [Pet]!
+        pet(input: PetInput): Pet
         users: [User]!
     }
 `
