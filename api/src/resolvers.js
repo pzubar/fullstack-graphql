@@ -12,10 +12,10 @@ module.exports = {
 	 * @param __
 	 * @param {{Pet: PetModel}} models
 	 */
-	pets(_, {input}, { models }) {
+	pets(_, { input }, { models }) {
 	  return models.Pet.findMany(input)
 	},
-	pet(_, {input}, { models }) {
+	pet(_, { input }, { models }) {
 	  return models.Pet.findOne(input)
 	},
 	me() {
@@ -26,9 +26,17 @@ module.exports = {
 	  }
 	},
   },
-  // Mutation: {
-  //
-  // },
+  Mutation: {
+	/**
+	 *
+	 * @param _
+	 * @param __
+	 * @param {{Pet: PetModel}} models
+	 */
+	newPet(_, { input }, { models }) {
+	  return models.Pet.create(input)
+	},
+  },
   Pet: {
 	img(pet) {
 	  return pet.type === 'DOG'
