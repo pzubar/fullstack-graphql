@@ -1,48 +1,34 @@
-const schema = require('./schema')
-/**
- * Here are your Resolvers for your Schema. They must match
- * the type definitions in your scheama
- */
-
 module.exports = {
   Query: {
-	/**
-	 *
-	 * @param _
-	 * @param __
-	 * @param {{Pet: PetModel}} models
-	 */
-	pets(_, { input }, { models }) {
-	  return models.Pet.findMany(input)
-	},
-	pet(_, { input }, { models }) {
-	  return models.Pet.findOne(input)
-	},
-	me() {
-	  return {
-		email: 'yoda@masters.com',
-		avatar: 'http://yoda.png',
-		friends: [],
-	  }
-	},
+    pets(_, {input}, {models}) {
+      return models.Pet.findMany(input || {})
+    },
+    pet(_, {id}, {models}) {
+      return models.Pet.findOne({id})
+    },
+    user(_, __, {models}) {
+      return models.User.findOne()
+    }
   },
   Mutation: {
-	/**
-	 *
-	 * @param _
-	 * @param __
-	 * @param {{Pet: PetModel}} models
-	 */
-	newPet(_, { input }, { models }) {
-	  return models.Pet.create(input)
-	},
+    addPet(_, {input}, {models, user}) {
+      const pet = models.Pet.create({...input, user: user.id})
+      return pet
+    }
   },
   Pet: {
-	img(pet) {
-	  return pet.type === 'DOG'
-		  ? 'https://placedog.net/300/300'
-		  : 'http://placekitten.com/300/300'
-	},
+    owner(pet, _, {models}) {
+      return models.User.findOne({id: pet.user})
+    },
+    img(pet) {
+      return pet.type === 'DOG'
+        ? 'https://placedog.net/300/300'
+        : 'http://placekitten.com/300/300'
+    }
   },
-  User: {},
+  User: {
+    pets(user, _, {models}) {
+      return models.Pet.findMany({user: user.id})
+    }
+  }
 }
