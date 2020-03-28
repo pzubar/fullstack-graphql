@@ -1,0 +1,45 @@
+# This file was generated based on ".graphqlconfig". Do not edit manually.
+
+schema {
+    query: Query
+    mutation: Mutation
+}
+
+type Mutation {
+    addPet(input: NewPetInput!): Pet!
+}
+
+type Pet {
+    createdAt: Int!
+    id: ID!
+    img: String!
+    name: String!
+    owner: User!
+    type: PetType!
+}
+
+type Query {
+    pet(id: ID!): Pet!
+    pets(input: PetsInput): [Pet]!
+    user: User!
+}
+
+type User {
+    id: ID!
+    pets: [Pet]!
+    username: String!
+}
+
+enum PetType {
+    CAT
+    DOG
+}
+
+input NewPetInput {
+    name: String!
+    type: PetType!
+}
+
+input PetsInput {
+    type: PetType
+}
